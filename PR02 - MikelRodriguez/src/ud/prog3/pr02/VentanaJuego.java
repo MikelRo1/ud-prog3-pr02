@@ -11,17 +11,21 @@ import javax.swing.*;
  * @author Andoni Eguíluz
  * Facultad de Ingeniería - Universidad de Deusto (2014)
  */
-public class VentanaJuego extends JFrame {
+public class VentanaJuego extends JFrame 
+{
 	private static final long serialVersionUID = 1L;  // Para serialización
 	JPanel pPrincipal;         // Panel del juego (layout nulo)
 	MundoJuego miMundo;        // Mundo del juego
 	CocheJuego miCoche;        // Coche del juego
 	MiRunnable miHilo = null;  // Hilo del bucle principal de juego	
-
+	boolean [] arraybooleans;
+	
 	/** Constructor de la ventana de juego. Crea y devuelve la ventana inicializada
 	 * sin coches dentro
 	 */
-	public VentanaJuego() {
+	public VentanaJuego() 
+	{
+		arraybooleans = new boolean [4];
 		// Liberación de la ventana por defecto al cerrar
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		// Creación contenedores y componentes
@@ -44,29 +48,37 @@ public class VentanaJuego extends JFrame {
 		// Formato de ventana
 		setSize( 1000, 750 );
 		setResizable( false );
+		
 		// Escuchadores de botones
-		bAcelerar.addActionListener( new ActionListener() {
+		bAcelerar.addActionListener( new ActionListener() 
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 				miCoche.acelera( +10, 1 );
 				// System.out.println( "Nueva velocidad de coche: " + miCoche.getVelocidad() );
 			}
 		});
-		bFrenar.addActionListener( new ActionListener() {
+		
+		bFrenar.addActionListener( new ActionListener() 
+		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				miCoche.acelera( -10, 1 );
 				// System.out.println( "Nueva velocidad de coche: " + miCoche.getVelocidad() );
 			}
 		});
-		bGiraIzq.addActionListener( new ActionListener() {
+		
+		bGiraIzq.addActionListener( new ActionListener() 
+		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				miCoche.gira( +10 );
 				// System.out.println( "Nueva dirección de coche: " + miCoche.getDireccionActual() );
 			}
 		});
-		bGiraDer.addActionListener( new ActionListener() {
+		
+		bGiraDer.addActionListener( new ActionListener() 
+		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				miCoche.gira( -10 );
@@ -75,29 +87,56 @@ public class VentanaJuego extends JFrame {
 		});
 		
 		// Añadido para que también se gestione por teclado con el KeyListener
-		pPrincipal.addKeyListener( new KeyAdapter() {
+		pPrincipal.addKeyListener( new KeyAdapter() 
+		{
 			@Override
-			public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
+			public void keyPressed(KeyEvent e) 
+			{
+				switch (e.getKeyCode()) 
+				{
 					case KeyEvent.VK_UP: {
-						miCoche.acelera( +5, 1 );
+						arraybooleans[0] = true;
 						break;
 					}
 					case KeyEvent.VK_DOWN: {
-						miCoche.acelera( -5, 1 );
+						arraybooleans[1] = true;
 						break;
 					}
 					case KeyEvent.VK_LEFT: {
-						miCoche.gira( +10 );
+						arraybooleans[2] = true;
 						break;
 					}
 					case KeyEvent.VK_RIGHT: {
-						miCoche.gira( -10 );
+						arraybooleans[3] = true;
+						break;
+					}
+				}				
+			}
+			@Override
+			public void keyReleased(KeyEvent e) 
+			{
+				switch (e.getKeyCode()) 
+				{
+					case KeyEvent.VK_UP: {
+						arraybooleans[0] = false;
+						break;
+					}
+					case KeyEvent.VK_DOWN: {
+						arraybooleans[1] = false;
+						break;
+					}
+					case KeyEvent.VK_LEFT: {
+						arraybooleans[2] = false;
+						break;
+					}
+					case KeyEvent.VK_RIGHT: {
+						arraybooleans[3] = false;
 						break;
 					}
 				}
 			}
 		});
+		
 		pPrincipal.setFocusable(true);
 		pPrincipal.requestFocus();
 		pPrincipal.addFocusListener( new FocusAdapter() {
@@ -118,7 +157,8 @@ public class VentanaJuego extends JFrame {
 	/** Programa principal de la ventana de juego
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		// Crea y visibiliza la ventana con el coche
 		try {
 			final VentanaJuego miVentana = new VentanaJuego();
@@ -145,7 +185,8 @@ public class VentanaJuego extends JFrame {
 	 * @author Andoni Eguíluz
 	 * Facultad de Ingeniería - Universidad de Deusto (2014)
 	 */
-	class MiRunnable implements Runnable {
+	class MiRunnable implements Runnable 
+	{
 		boolean sigo = true;
 		@Override
 		public void run() {
@@ -160,12 +201,31 @@ public class VentanaJuego extends JFrame {
 				if (miMundo.hayChoqueVertical(miCoche)) // Espejo vertical si choca en Y
 					miMundo.rebotaVertical(miCoche);
 				// Dormir el hilo 40 milisegundos
+				
+				if (arraybooleans[0] == true)
+				{
+					miCoche.acelera( +5, 1 );
+				}
+				if (arraybooleans[1] == true)
+				{
+					miCoche.acelera( -5, 1 );
+				}
+				if (arraybooleans[2] == true)
+				{
+					miCoche.gira( +10 );
+				}
+				if (arraybooleans[3] == true)
+				{
+					miCoche.gira( -10 );
+				}
+				
 				try {
 					Thread.sleep( 40 );
 				} catch (Exception e) {
 				}
 			}
 		}
+		
 		/** Ordena al hilo detenerse en cuanto sea posible
 		 */
 		public void acaba() {

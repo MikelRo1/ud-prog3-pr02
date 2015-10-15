@@ -10,14 +10,23 @@ public class Coche {
 	protected double posX;  // Posición en X (horizontal)
 	protected double posY;  // Posición en Y (vertical)
 	protected String piloto;  // Nombre de piloto
+	protected static double masa;
+	protected int fuerzabaseadelante;
+	protected int fuerzabaseatras;
+	protected static double coefsuelo;
+	protected static double coefaire;
 	
 	// Constructores
 	
-	public Coche() {
+	public Coche() 
+	{
 		miVelocidad = 0;
 		miDireccionActual = 0;
 		posX = 300;
 		posY = 300;
+		masa = 1;
+		coefsuelo = 15.5;
+		coefaire = 0.35;
 	}
 	
 	/** Devuelve la velocidad actual del coche en píxeles por segundo
@@ -72,7 +81,46 @@ public class Coche {
 	public void setPiloto(String piloto) {
 		this.piloto = piloto;
 	}
+	
+	public double getMasa() {
+		return masa;
+	}
 
+	public void setMasa(double masa) {
+		this.masa = masa;
+	}
+
+	public double getCoefsuelo() {
+		return coefsuelo;
+	}
+
+	public void setCoefsuelo(double coefsuelo) {
+		this.coefsuelo = coefsuelo;
+	}
+
+	public double getCoefaire() {
+		return coefaire;
+	}
+
+	public void setCoefaire(double coefaire) {
+		this.coefaire = coefaire;
+	}
+	
+	public int getFuerzabaseadelante() {
+		return fuerzabaseadelante;
+	}
+
+	public void setFuerzabaseadelante(int fuerzabaseadelante) {
+		this.fuerzabaseadelante = fuerzabaseadelante;
+	}
+
+	public int getFuerzabaseatras() {
+		return fuerzabaseatras;
+	}
+
+	public void setFuerzabaseatras(int fuerzabaseatras) {
+		this.fuerzabaseatras = fuerzabaseatras;
+	}
 
 	/** Cambia la velocidad actual del coche
 	 * @param aceleracion	Incremento/decremento de la velocidad en pixels/segundo
@@ -103,4 +151,35 @@ public class Coche {
 		return piloto + " (" + posX + "," + posY + ") - " +
 			   "Velocidad: " + miVelocidad + " ## Dirección: " + miDireccionActual; 
 	}
+	
+	 /** Devuelve la fuerza de aceleración del coche, de acuerdo al motor definido en la práctica 2
+	 * @return Fuerza de aceleración en Newtixels
+	 */
+	 public double fuerzaAceleracionAdelante() 
+	 {
+	 if (miVelocidad<=-150) return fuerzabaseadelante;
+	 else if (miVelocidad<=0)
+		 return fuerzabaseadelante*(-miVelocidad/150*0.5+0.5);
+	 else if (miVelocidad<=250)
+		 return fuerzabaseadelante*(miVelocidad/250*0.5+0.5);
+	 else if (miVelocidad<=250)
+		 return fuerzabaseadelante*(miVelocidad/250*0.5+0.5);
+	 else if (miVelocidad<=750)
+		 return fuerzabaseadelante;
+	 else return fuerzabaseadelante*(-(miVelocidad-1000)/250);
+	 } 
+	 
+	 public double fuerzaAceleracionAtras() 
+	 {
+	 if (miVelocidad<=-150) return fuerzabaseatras;
+	 else if (miVelocidad<=0)
+		 return fuerzabaseatras*(-miVelocidad/150*0.5+0.5);
+	 else if (miVelocidad<=250)
+		 return fuerzabaseatras*(miVelocidad/250*0.5+0.5);
+	 else if (miVelocidad<=250)
+		 return fuerzabaseatras*(miVelocidad/250*0.5+0.5);
+	 else if (miVelocidad<=750)
+		 return fuerzabaseatras;
+	 else return fuerzabaseatras*(-(miVelocidad-1000)/250);
+	 }
 }
