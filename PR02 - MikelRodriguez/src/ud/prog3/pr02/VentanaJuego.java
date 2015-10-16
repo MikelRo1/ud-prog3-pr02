@@ -19,6 +19,8 @@ public class VentanaJuego extends JFrame
 	CocheJuego miCoche;        // Coche del juego
 	MiRunnable miHilo = null;  // Hilo del bucle principal de juego	
 	boolean [] arraybooleans;
+	int errores = 0;
+	int pillados = 0;
 	
 	/** Constructor de la ventana de juego. Crea y devuelve la ventana inicializada
 	 * sin coches dentro
@@ -188,6 +190,7 @@ public class VentanaJuego extends JFrame
 	class MiRunnable implements Runnable 
 	{
 		boolean sigo = true;
+		double segundos;
 		@Override
 		public void run() {
 			// Bucle principal forever hasta que se pare el juego...
@@ -223,6 +226,16 @@ public class VentanaJuego extends JFrame
 				}
 				if(arraybooleans[3]==true){
 					miCoche.gira(-10);
+				}
+				
+				if (segundos>=1.2){
+					
+					miMundo.creaEstrella();
+					segundos=0.0;
+				
+				} else{
+					
+					segundos = segundos + 0.040;	
 				}
 				
 				// Chequear choques
