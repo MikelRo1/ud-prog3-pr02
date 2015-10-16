@@ -1,5 +1,9 @@
 package ud.prog3.pr02;
 
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.JPanel;
 
 /** "Mundo" del juego del coche.
@@ -13,6 +17,13 @@ public class MundoJuego
 {
 	private JPanel panel;  // panel visual del juego
 	CocheJuego miCoche;    // Coche del juego
+	
+	Estrella Estrella;
+	JLabelEstrella grafico = new JLabelEstrella();
+	Random numero1 = new Random();
+	int eliminadas=0;
+	
+	ArrayList<Estrella> ArrayEstrellas = new ArrayList<Estrella>();
 	
 	/** Construye un mundo de juego
 	 * @param panel	Panel visual del juego
@@ -139,5 +150,60 @@ public class MundoJuego
 		 coche.acelera( aceleracion, 0.04 );
 		 }
 	 } 
-		 
+	
+	 public void creaEstrella()
+	 {
+		  Estrella = new Estrella();
+		  Date fecha = new Date();
+		  Estrella.setPos(numero1.nextInt(500), numero1.nextInt(500));
+		  Estrella.setFecha(fecha);
+		  panel.add(Estrella.getMiGrafico());
+		  Estrella.getMiGrafico().repaint();
+	 }
+	
+	 public int quitaYRotaEstrellas( long maxTiempo )
+	 {	
+		if(ArrayEstrellas.size()>0)
+		{
+			for(int i=0; i<ArrayEstrellas.size(); i++)
+			{
+				
+				Date ahora = new Date();
+				long tiempoTranscurrido = ahora.getTime() - ArrayEstrellas.get(i).getFecha().getTime();
+				
+				if (tiempoTranscurrido > maxTiempo){	
+					ArrayEstrellas.remove(i);
+					panel.remove(ArrayEstrellas.get(i).getMiGrafico());
+					ArrayEstrellas.get(i).getMiGrafico().repaint();
+					eliminadas++;
+				}else{
+					
+					ArrayEstrellas.get(i).getMiGrafico().setGiro(10);
+					ArrayEstrellas.get(i).getMiGrafico().repaint();
+				}	
+			}
+		}
+		return eliminadas;
+	}
+	 
+	public int choquesConEstrellas()
+	{
+		int choques=0;
+		for(int i=0 ; i <ArrayEstrellas.size(); i++)
+		{
+			Estrella objetoEstrella = new Estrella();
+			objetoEstrella= ArrayEstrellas.get(i);
+			double posXEstrella = objetoEstrella.getPosX();
+			double posYEstrella = objetoEstrella.getPosY();
+			double posXCoche = miCoche.getPosX();
+			double posYCoche = miCoche.getPosY();
+			if(posXCoche -posXEstrella >=-35 && posXCoche -posXEstrella <=35 && posYCoche -posYEstrella >=-35 && posYCoche -posYEstrella <=35 ){
+				choques++;
+				ArrayEstrellas.remove(objetoEstrella);
+				panel.remove(objetoEstrella.getMiGrafico());
+				panel.repaint();
+			} 
+		}
+		return choques;
+	}		 
 }

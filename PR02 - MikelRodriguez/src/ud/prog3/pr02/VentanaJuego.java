@@ -30,27 +30,27 @@ public class VentanaJuego extends JFrame
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		// Creación contenedores y componentes
 		pPrincipal = new JPanel();
-		JPanel pBotonera = new JPanel();
-		JButton bAcelerar = new JButton( "Acelera" );
-		JButton bFrenar = new JButton( "Frena" );
-		JButton bGiraIzq = new JButton( "Gira Izq." );
-		JButton bGiraDer = new JButton( "Gira Der." );
+		//JPanel pBotonera = new JPanel();
+		//JButton bAcelerar = new JButton( "Acelera" );
+		//JButton bFrenar = new JButton( "Frena" );
+		//JButton bGiraIzq = new JButton( "Gira Izq." );
+		//JButton bGiraDer = new JButton( "Gira Der." );
 		// Formato y layouts
 		pPrincipal.setLayout( null );
 		pPrincipal.setBackground( Color.white );
 		// Añadido de componentes a contenedores
 		add( pPrincipal, BorderLayout.CENTER );
-		pBotonera.add( bAcelerar );
-		pBotonera.add( bFrenar );
-		pBotonera.add( bGiraIzq );
-		pBotonera.add( bGiraDer );
-		add( pBotonera, BorderLayout.SOUTH );
+		//pBotonera.add( bAcelerar );
+		//pBotonera.add( bFrenar );
+		//pBotonera.add( bGiraIzq );
+		//pBotonera.add( bGiraDer );
+		//add( pBotonera, BorderLayout.SOUTH );
 		// Formato de ventana
 		setSize( 1000, 750 );
 		setResizable( false );
 		
 		// Escuchadores de botones
-		bAcelerar.addActionListener( new ActionListener() 
+		/*bAcelerar.addActionListener( new ActionListener() 
 		{
 			@Override
 		public void actionPerformed(ActionEvent e) {
@@ -85,7 +85,7 @@ public class VentanaJuego extends JFrame
 				// System.out.println( "Nueva dirección de coche: " + miCoche.getDireccionActual() );
 			}
 		});
-		
+		*/
 		// Añadido para que también se gestione por teclado con el KeyListener
 		pPrincipal.addKeyListener( new KeyAdapter() 
 		{
