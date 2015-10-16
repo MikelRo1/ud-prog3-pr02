@@ -11,8 +11,8 @@ public class Coche {
 	protected double posY;  // Posición en Y (vertical)
 	protected String piloto;  // Nombre de piloto
 	static double masa;
-	protected double fuerzabaseadelante = 1000;
-	protected double fuerzabaseatras = 2000;
+	protected double fuerzabaseadelante;
+	protected double fuerzabaseatras;
 	static double coefsuelo;
 	static double coefaire;
 	
@@ -25,6 +25,8 @@ public class Coche {
 		posX = 300;
 		posY = 300;
 		masa = 1;
+		fuerzabaseadelante = 1000;
+		fuerzabaseatras = 2000;
 		coefsuelo = 15.5;
 		coefaire = 0.35;
 	}
