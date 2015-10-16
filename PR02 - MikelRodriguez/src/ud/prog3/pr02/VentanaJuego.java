@@ -194,31 +194,46 @@ public class VentanaJuego extends JFrame
 			while (sigo) {
 				// Mover coche
 				miCoche.mueve( 0.040 );
+				
+				double rozamiento = miMundo.calcFuerzaRozamiento(miCoche.getMasa(), miCoche.getCoefsuelo(), miCoche.getCoefaire(), miCoche.getVelocidad());
+
+				if(arraybooleans[0]==true){
+					miMundo.calcAceleracionConFuerza(miCoche.fuerzaAceleracionAdelante(), miCoche.getMasa());
+					miMundo.aplicarFuerza(miCoche.fuerzaAceleracionAdelante(), miCoche);
+					
+				}
+				else if(arraybooleans[0]==false){
+					
+					miMundo.calcAceleracionConFuerza(miCoche.fuerzaAceleracionAdelante(), miCoche.getMasa());
+					miMundo.aplicarFuerza(rozamiento, miCoche);
+										
+				}
+				if(arraybooleans[1]==true){
+					miMundo.calcAceleracionConFuerza(-miCoche.fuerzaAceleracionAtras(), miCoche.getMasa());
+					miMundo.aplicarFuerza(-miCoche.fuerzaAceleracionAtras(), miCoche);
+					
+				}
+				else if(arraybooleans[1]==false){
+					miMundo.calcAceleracionConFuerza(miCoche.fuerzaAceleracionAtras(), miCoche.getMasa());
+					miMundo.aplicarFuerza(rozamiento, miCoche);
+					
+				}
+				if(arraybooleans[2]==true){
+					miCoche.gira(+10);
+				}
+				if(arraybooleans[3]==true){
+					miCoche.gira(-10);
+				}
+				
 				// Chequear choques
+	
 				// (se comprueba tanto X como Y porque podría a la vez chocar en las dos direcciones (esquinas)
 				if (miMundo.hayChoqueHorizontal(miCoche)) // Espejo horizontal si choca en X
 					miMundo.rebotaHorizontal(miCoche);
 				if (miMundo.hayChoqueVertical(miCoche)) // Espejo vertical si choca en Y
 					miMundo.rebotaVertical(miCoche);
 				// Dormir el hilo 40 milisegundos
-				
-				if (arraybooleans[0] == true)
-				{
-					miCoche.acelera( +5, 1 );
-				}
-				if (arraybooleans[1] == true)
-				{
-					miCoche.acelera( -5, 1 );
-				}
-				if (arraybooleans[2] == true)
-				{
-					miCoche.gira( +10 );
-				}
-				if (arraybooleans[3] == true)
-				{
-					miCoche.gira( -10 );
-				}
-				
+
 				try {
 					Thread.sleep( 40 );
 				} catch (Exception e) {

@@ -10,11 +10,11 @@ public class Coche {
 	protected double posX;  // Posición en X (horizontal)
 	protected double posY;  // Posición en Y (vertical)
 	protected String piloto;  // Nombre de piloto
-	protected static double masa;
-	protected int fuerzabaseadelante;
-	protected int fuerzabaseatras;
-	protected static double coefsuelo;
-	protected static double coefaire;
+	static double masa;
+	protected double fuerzabaseadelante = 1000;
+	protected double fuerzabaseatras = 2000;
+	static double coefsuelo;
+	static double coefaire;
 	
 	// Constructores
 	
@@ -106,7 +106,7 @@ public class Coche {
 		this.coefaire = coefaire;
 	}
 	
-	public int getFuerzabaseadelante() {
+	public double getFuerzabaseadelante() {
 		return fuerzabaseadelante;
 	}
 
@@ -114,7 +114,7 @@ public class Coche {
 		this.fuerzabaseadelante = fuerzabaseadelante;
 	}
 
-	public int getFuerzabaseatras() {
+	public double getFuerzabaseatras() {
 		return fuerzabaseatras;
 	}
 
